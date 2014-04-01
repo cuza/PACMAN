@@ -1,0 +1,257 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{9657999E-A78E-4752-A064-DC8C121F5430}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <NoStandardLibraries>false</NoStandardLibraries>
+    <AssemblyName>WindowsApplication</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>PACMAN</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\Microsoft.Xna.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Avatar, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\Microsoft.Xna.Framework.Avatar.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\Microsoft.Xna.Framework.Game.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.GamerServices, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\Microsoft.Xna.Framework.GamerServices.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\Microsoft.Xna.Framework.Graphics.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Input.Touch, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\Microsoft.Xna.Framework.Input.Touch.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Interop, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\Microsoft.Xna.Framework.Interop.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.MediaLibraryExtensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\Microsoft.Xna.Framework.MediaLibraryExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Net, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\Microsoft.Xna.Framework.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Storage, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\Microsoft.Xna.Framework.Storage.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Video, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\Microsoft.Xna.Framework.Video.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Xact, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\Microsoft.Xna.Framework.Xact.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Constants.cs" />
+    <Compile Include="GameLoop.cs" />
+    <Compile Include="Ghost.cs" />
+    <Compile Include="GhostSoundsManager.cs" />
+    <Compile Include="Grid.cs" />
+    <Compile Include="HighScores.cs" />
+    <Compile Include="Menu.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Questions.cs" />
+    <Compile Include="Sprite.cs" />
+    <Compile Include="XNAPacMan.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Audio\bg1.wav" />
+    <Content Include="Content\Audio\bg2.wav" />
+    <Content Include="Content\Audio\bg3.wav" />
+    <Content Include="Content\Audio\bgghost.wav" />
+    <Content Include="Content\Audio\bgghosteyes.wav" />
+    <Content Include="Content\Audio\eatfruit.wav" />
+    <Content Include="Content\Audio\eatghost.wav" />
+    <Content Include="Content\Audio\eatpill1.wav" />
+    <Content Include="Content\Audio\eatpill2.wav" />
+    <Content Include="Content\Audio\extralife.wav" />
+    <Content Include="Content\Audio\killed.wav" />
+    <Content Include="Content\Audio\newgame.wav" />
+    <Content Include="Content\Audio\newlevel.wav" />
+    <Content Include="Content\Audio\XNAPacManAudio.xap" />
+    <Content Include="Content\bonus\Apple.png" />
+    <Content Include="Content\bonus\Banana.png" />
+    <Content Include="Content\bonus\Bell.png" />
+    <Content Include="Content\bonus\Cherry.png" />
+    <Content Include="Content\bonus\Key.png" />
+    <Content Include="Content\bonus\Orange.png" />
+    <Content Include="Content\bonus\Pear.png" />
+    <Content Include="Content\bonus\Pretzel.png" />
+    <Content Include="Content\bonus\Strawberry.png" />
+    <Content Include="Content\Grid.txt" />
+    <Content Include="Content\obj\Content.contentproj.XactOutput.FileList.txt" />
+    <Content Include="Content\obj\Source codeContent.contentproj.XactOutput.FileList.txt" />
+    <Content Include="Content\obj\x86\Debug\Audio\XNAPacManAudio.xml" />
+    <Content Include="Content\obj\x86\Debug\Content.contentproj.FileListAbsolute.txt" />
+    <Content Include="Content\obj\x86\Debug\ContentPipeline.xml" />
+    <Content Include="Content\obj\x86\Debug\Source codeContent.contentproj.FileListAbsolute.txt" />
+    <Content Include="Content\questions.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Source codeContent.contentproj.user" />
+    <Content Include="Content\sprites\Board.png" />
+    <Content Include="Content\sprites\BoardFlash.png" />
+    <Content Include="Content\sprites\Crump.png" />
+    <Content Include="Content\sprites\DyingSheetNew.png" />
+    <Content Include="Content\sprites\ExtraLife.png" />
+    <Content Include="Content\sprites\GhostBase.png" />
+    <Content Include="Content\sprites\GhostBase2.png" />
+    <Content Include="Content\sprites\GhostChased.png" />
+    <Content Include="Content\sprites\GhostEyes.png" />
+    <Content Include="Content\sprites\GhostEyesCenter.png" />
+    <Content Include="Content\sprites\PacManEating1.png" />
+    <Content Include="Content\sprites\PacManEating2.png" />
+    <Content Include="Content\sprites\PacManEating3.png" />
+    <Content Include="Content\sprites\PacManEating4.png" />
+    <Content Include="Content\sprites\PacManEating5.png" />
+    <Content Include="Content\sprites\PacManEating6.png" />
+    <Content Include="Content\sprites\PacManEating7.png" />
+    <Content Include="Content\sprites\PacManEating8.png" />
+    <Content Include="Content\sprites\PacManEating9.png" />
+    <Content Include="Content\sprites\PowerPill.png" />
+    <Content Include="Content\sprites\Selection.png" />
+    <Content Include="Content\sprites\Title.png" />
+    <Content Include="Game.ico" />
+    <Content Include="GameThumbnail.png" />
+    <Content Include="Grid.txt" />
+    <Content Include="_ReSharper.XNAPacMan\ModuleIds.xml" />
+    <Content Include="_UpgradeReport_Files\UpgradeReport.css" />
+    <Content Include="_UpgradeReport_Files\UpgradeReport.xslt" />
+    <Content Include="_UpgradeReport_Files\UpgradeReport_Error.png" />
+    <Content Include="_UpgradeReport_Files\UpgradeReport_Information.png" />
+    <Content Include="_UpgradeReport_Files\UpgradeReport_Minus.gif" />
+    <Content Include="_UpgradeReport_Files\UpgradeReport_Plus.gif" />
+    <Content Include="_UpgradeReport_Files\UpgradeReport_Success.png" />
+    <Content Include="_UpgradeReport_Files\UpgradeReport_Warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Content\MenuItem.spritefont" />
+    <None Include="Content\obj\x86\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <None Include="Content\obj\x86\Debug\ResolveAssemblyReference.cache" />
+    <None Include="Content\Score.spritefont" />
+    <None Include="Content\ScoreEvent.spritefont" />
+    <None Include="Content\Source codeContent.contentproj" />
+    <None Include="Map.dgml" />
+    <None Include="XNAPacMan.csproj.Debug.cachefile" />
+    <None Include="_ReSharper.XNAPacMan\BuildScriptCache\.crc" />
+    <None Include="_ReSharper.XNAPacMan\BuildScriptCache\.version" />
+    <None Include="_ReSharper.XNAPacMan\BuildScriptCache\5\427354ed.dat" />
+    <None Include="_ReSharper.XNAPacMan\NamedArguments\.crc" />
+    <None Include="_ReSharper.XNAPacMan\NamedArguments\.version" />
+    <None Include="_ReSharper.XNAPacMan\NamedArguments\5\44ac88c6.dat" />
+    <None Include="_ReSharper.XNAPacMan\ProjectModel\ProjectModel.dat" />
+    <None Include="_ReSharper.XNAPacMan\Resources\.crc" />
+    <None Include="_ReSharper.XNAPacMan\Resources\.version" />
+    <None Include="_ReSharper.XNAPacMan\SymbolCache.bin" />
+    <None Include="_ReSharper.XNAPacMan\TagPrefixes\.crc" />
+    <None Include="_ReSharper.XNAPacMan\TagPrefixes\.version" />
+    <None Include="_ReSharper.XNAPacMan\TodoCache\.crc" />
+    <None Include="_ReSharper.XNAPacMan\TodoCache\.version" />
+    <None Include="_ReSharper.XNAPacMan\TodoCache\0\65c8ded7.dat" />
+    <None Include="_ReSharper.XNAPacMan\WebsiteFileReferences\.crc" />
+    <None Include="_ReSharper.XNAPacMan\WebsiteFileReferences\.version" />
+    <None Include="_ReSharper.XNAPacMan\WordIndex\.crc" />
+    <None Include="_ReSharper.XNAPacMan\WordIndex\.version" />
+    <None Include="_ReSharper.XNAPacMan\WordIndex\7\50f5836c.dat" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Content\bin\x86\Debug\" />
+    <Folder Include="Content\bin\x86\Release\" />
+    <Folder Include="Content\obj\x86\Debug\TempPE\" />
+    <Folder Include="_ReSharper.XNAPacMan\DecompilerCache\" />
+    <Folder Include="_ReSharper.XNAPacMan\PdbInfo\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.4.5">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 4.5</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
+  <ProjectExtensions>
+    <VisualStudio AllowExistingFolder="true" />
+  </ProjectExtensions>
+</Project>

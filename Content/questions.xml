@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Root>
+  <Ejercicio Tipo="VoF">
+        <Pregunta>
+      	Loren ipsum dolor bla bla bla
+      	</Pregunta>
+        <Respuesta Correcto="true">
+        	bla bla bla
+        </Respuesta>
+        <Respuesta Correcto="true">
+        	bla bla bla
+        </Respuesta>
+        <Respuesta Correcto="false">
+        	bla bla bla
+        </Respuesta>    
+        <Respuesta Correcto="false">
+        	bla bla bla
+        </Respuesta> 
+  </Ejercicio>
+  <Ejercicio Tipo="Marca">
+        <Pregunta>
+      	Loren ipsum dolor bla bla bla
+      	</Pregunta>
+        <Respuesta Correcto="false">
+        	bla bla bla
+        </Respuesta>
+        <Respuesta Correcto="true">
+        	bla bla bla
+        </Respuesta>
+        <Respuesta Correcto="false">
+        	bla bla bla
+        </Respuesta>    
+        <Respuesta Correcto="false">
+        	bla bla bla
+        </Respuesta> 
+  </Ejercicio>
+</Root>
+
