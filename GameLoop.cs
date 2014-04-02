@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -7,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 
-namespace XNAPacMan {
+namespace PACMAN {
 
     /// <summary>
     /// Defines a position on the board where a ghost has died or a fruit was eaten, as well as the score earned.
@@ -28,7 +29,7 @@ namespace XNAPacMan {
     /// takes place. It's responsible for coordinating broad game logic,
     /// drawing the board and scores, as well as linking with the menu.
     /// </summary>
-    public class GameLoop : Microsoft.Xna.Framework.DrawableGameComponent {
+    public class GameLoop : DrawableGameComponent {
         public GameLoop(Game game)
             : base(game) {
             // TODO: Construct any child components here
@@ -64,16 +65,18 @@ namespace XNAPacMan {
             board_ = Game.Content.Load<Texture2D>("sprites/Board");
             boardFlash_ = Game.Content.Load<Texture2D>("sprites/BoardFlash");
             bonusEaten_ = new Dictionary<string, int>();
-            bonus_ = new Dictionary<string, Texture2D>(9);
-            bonus_.Add("Apple", Game.Content.Load<Texture2D>("bonus/Apple"));
-            bonus_.Add("Banana", Game.Content.Load<Texture2D>("bonus/Banana"));
-            bonus_.Add("Bell", Game.Content.Load<Texture2D>("bonus/Bell"));
-            bonus_.Add("Cherry", Game.Content.Load<Texture2D>("bonus/Cherry"));
-            bonus_.Add("Key", Game.Content.Load<Texture2D>("bonus/Key"));
-            bonus_.Add("Orange", Game.Content.Load<Texture2D>("bonus/Orange"));
-            bonus_.Add("Pear", Game.Content.Load<Texture2D>("bonus/Pear"));
-            bonus_.Add("Pretzel", Game.Content.Load<Texture2D>("bonus/Pretzel"));
-            bonus_.Add("Strawberry", Game.Content.Load<Texture2D>("bonus/Strawberry"));
+            bonus_ = new Dictionary<string, Texture2D>(9)
+            {
+                {"Apple", Game.Content.Load<Texture2D>("bonus/Apple")},
+                {"Banana", Game.Content.Load<Texture2D>("bonus/Banana")},
+                {"Bell", Game.Content.Load<Texture2D>("bonus/Bell")},
+                {"Cherry", Game.Content.Load<Texture2D>("bonus/Cherry")},
+                {"Key", Game.Content.Load<Texture2D>("bonus/Key")},
+                {"Orange", Game.Content.Load<Texture2D>("bonus/Orange")},
+                {"Pear", Game.Content.Load<Texture2D>("bonus/Pear")},
+                {"Pretzel", Game.Content.Load<Texture2D>("bonus/Pretzel")},
+                {"Strawberry", Game.Content.Load<Texture2D>("bonus/Strawberry")}
+            };
 
             scoreEvents_ = new List<ScoreEvent>(5);
             bonusPresent_ = false;
@@ -143,13 +146,12 @@ namespace XNAPacMan {
                     Constants.Level++;
                     return;
                 }
-                else { // Game over, you win.
-                    Menu.SaveHighScore(Score);
-                    Game.Components.Add(new Menu(Game, null));
-                    Game.Components.Remove(this);
-                    GhostSoundsManager.StopLoops();
-                    return;
-                }
+                // Game over, you win.
+                Menu.SaveHighScore(Score);
+                Game.Components.Add(new Menu(Game, null));
+                Game.Components.Remove(this);
+                GhostSoundsManager.StopLoops();
+                return;
             }
 
             Keys[] inputKeys = Keyboard.GetState().GetPressedKeys();
@@ -174,11 +176,12 @@ namespace XNAPacMan {
                     if (Grid.TileGrid[playerTile.X, playerTile.Y].HasPowerPill) {
                         Score += 40;
                         eatenGhosts_ = 0;
-                        for (int i = 0; i < ghosts_.Count; i++) {
-                            if (ghosts_[i].State == GhostState.Attack || ghosts_[i].State == GhostState.Scatter ||
-                                ghosts_[i].State == GhostState.Blue) {
-                                ghosts_[i].State = GhostState.Blue;
-                            }
+                        foreach (Ghost ghost in ghosts_)
+                        {
+                            if (ghost.State == GhostState.Attack || ghost.State == GhostState.Scatter ||
+                                ghost.State == GhostState.Blue) {
+                                    ghost.State = GhostState.Blue;
+                                }
                         }
                         Grid.TileGrid[playerTile.X, playerTile.Y].HasPowerPill = false;
                     }
@@ -216,22 +219,23 @@ namespace XNAPacMan {
 
             // Detect collision between ghosts and the player
             foreach (Ghost ghost in ghosts_) {
-                Rectangle playerArea = new Rectangle((player_.Position.Tile.X * 16) + player_.Position.DeltaPixel.X,
+                var playerArea = new Rectangle((player_.Position.Tile.X * 16) + player_.Position.DeltaPixel.X,
                                                      (player_.Position.Tile.Y * 16) + player_.Position.DeltaPixel.Y,
                                                       26,
                                                       26);
-                Rectangle ghostArea = new Rectangle((ghost.Position.Tile.X * 16) + ghost.Position.DeltaPixel.X,
+                var ghostArea = new Rectangle((ghost.Position.Tile.X * 16) + ghost.Position.DeltaPixel.X,
                                                     (ghost.Position.Tile.Y * 16) + ghost.Position.DeltaPixel.Y,
                                                     22,
                                                     22);
-                if (!Rectangle.Intersect(playerArea, ghostArea).IsEmpty) {
+                if (!Rectangle.Intersect(playerArea, ghostArea).IsEmpty)
+                {
                     // If collision detected, either kill the ghost or kill the pac man, depending on state.
                     if (ghost.State == GhostState.Blue) {
                         //TODO Work on the logic of the educational game
                         KillGosht(ghost);
                        return;
-                    } 
-                    else if (ghost.State != GhostState.Dead )
+                    }
+                    if (ghost.State != GhostState.Dead )
                     {
                         Game.Components.Add(new Menu(Game, this, ghost));
                         Game.Components.Remove(this);
@@ -291,7 +295,7 @@ namespace XNAPacMan {
             soundBank_.PlayCue("EatGhost");
             ghost.State = GhostState.Dead;
             eatenGhosts_++;
-            int bonus = (int)(100 * Math.Pow(2, eatenGhosts_));
+            var bonus = (int)(100 * Math.Pow(2, eatenGhosts_));
             Score += bonus;
             scoreEvents_.Add(new ScoreEvent(ghost.Position, DateTime.Now, bonus));
             LockTimer = TimeSpan.FromMilliseconds(900);
@@ -306,7 +310,7 @@ namespace XNAPacMan {
             // The GameLoop is a main component, so it is responsible for initializing the sprite batch each frame
             spriteBatch_.Begin();
 
-            Vector2 boardPosition = new Vector2(
+            var boardPosition = new Vector2(
                 (graphics_.PreferredBackBufferWidth / 2) - (board_.Width / 2),
                 (graphics_.PreferredBackBufferHeight / 2) - (board_.Height / 2)
                 );
@@ -350,11 +354,11 @@ namespace XNAPacMan {
 
             // Draw current score
             spriteBatch_.DrawString(scoreFont_, "SCORE", new Vector2(boardPosition.X + 30, boardPosition.Y - 50), Color.White);
-            spriteBatch_.DrawString(scoreFont_, Score.ToString(), new Vector2(boardPosition.X + 30, boardPosition.Y - 30), Color.White);
+            spriteBatch_.DrawString(scoreFont_, Score.ToString(CultureInfo.InvariantCulture), new Vector2(boardPosition.X + 30, boardPosition.Y - 30), Color.White);
 
             // Draw current level
             spriteBatch_.DrawString(scoreFont_, "LEVEL", new Vector2(boardPosition.X + board_.Width - 80, boardPosition.Y - 50), Color.White);
-            spriteBatch_.DrawString(scoreFont_, Constants.Level.ToString(), new Vector2(boardPosition.X + board_.Width - 80, boardPosition.Y - 30), Color.White);
+            spriteBatch_.DrawString(scoreFont_, Constants.Level.ToString(CultureInfo.InvariantCulture), new Vector2(boardPosition.X + board_.Width - 80, boardPosition.Y - 30), Color.White);
 
             // Draw a bonus fruit if any
             if (bonusPresent_) {
@@ -378,7 +382,7 @@ namespace XNAPacMan {
 
             // Draw special scores (as when a ghost or fruit has been eaten)
             foreach (ScoreEvent se in scoreEvents_) {
-                spriteBatch_.DrawString(scoreEventFont_, se.Score.ToString(), new Vector2(boardPosition.X + (se.Position.Tile.X * 16) + se.Position.DeltaPixel.X + 4,
+                spriteBatch_.DrawString(scoreEventFont_, se.Score.ToString(CultureInfo.InvariantCulture), new Vector2(boardPosition.X + (se.Position.Tile.X * 16) + se.Position.DeltaPixel.X + 4,
                                                                                            boardPosition.Y + (se.Position.Tile.Y * 16) + se.Position.DeltaPixel.Y + 4), Color.White);            
             }
 

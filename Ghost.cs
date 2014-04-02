@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 
-namespace XNAPacMan {
+namespace PACMAN {
 
     public enum GhostState { Home, Scatter, Attack, Blue, Dead }
     public enum Ghosts { Blinky, Pinky, Inky, Clyde }
@@ -29,14 +28,14 @@ namespace XNAPacMan {
             ghostChased_ = game.Content.Load<Texture2D>("sprites/GhostChased");
             eyesBase_ = game.Content.Load<Texture2D>("sprites/GhostEyes");
             eyesCenter_ = game.Content.Load<Texture2D>("sprites/GhostEyesCenter");
-            colorBase_ = Constants.colors(identity);
+            colorBase_ = Constants.Colors(identity);
             identity_ = identity;
             previousNumCrumps_ = 0;
             Reset(true, player);
             wiggle_ = true;
             direction_ = new Direction();
             lastJunction_ = new Point();
-            scatterTiles_ = Constants.scatterTiles(identity);
+            scatterTiles_ = Constants.ScatterTiles(identity);
         }
 
         /// <summary>
@@ -50,7 +49,7 @@ namespace XNAPacMan {
             // So to get them playing at level start, we do this simple hack.
             updateCount_ = 0;
             initialJumps_ = Constants.InitialJumps(identity_, newLevel);
-            position_ = Constants.startPosition(identity_);
+            position_ = Constants.StartPosition(identity_);
             scheduleStateEval_ = true;
             lastJunction_ = new Point();
             player_ = player;
@@ -84,7 +83,7 @@ namespace XNAPacMan {
                 StateEval();
             }
             // After the AI has had the occasion to run, update lastJuntion.
-            if (position_.DeltaPixel == Point.Zero && IsAJunction(position_.Tile)) {
+            if (position_.DeltaPixel == Point.Zero && IsAJunction()) {
                 lastJunction_ = position_.Tile;
             }
             Move();
@@ -118,42 +117,30 @@ namespace XNAPacMan {
                     // above the home
                     if (position_.Tile.Y == 11 && position_.DeltaPixel.Y == 0) {
                         // Select inital direction based on scatter tiles
-                        if (Constants.scatterTiles(identity_)[0].X < 13) {
-                            direction_ = Direction.Left;
-                        } else {
-                            direction_ = Direction.Right;
-                        }
-                        if (scatterModesLeft_ > 0) {
-                            State = GhostState.Scatter;
-                        } else {
-                            State = GhostState.Attack;
-                        }
+                        direction_ = Constants.ScatterTiles(identity_)[0].X < 13 ? Direction.Left : Direction.Right;
+                        State = scatterModesLeft_ > 0 ? GhostState.Scatter : GhostState.Attack;
                         return;
                     }
                         // Ghosts move up when they are aligned with the entrance
-                    else if (position_.Tile.X == 13 && position_.DeltaPixel.X == 8) {
+                    if (position_.Tile.X == 13 && position_.DeltaPixel.X == 8) {
                         direction_ = Direction.Up;
                     }
                         // When on one side, move towards middle when on the bottom and time's up
                         // If time's not up, keep bouncing up and down
                     else if ((position_.DeltaPixel.Y == 8) &&
-                            ((position_.Tile.X == 11 && position_.DeltaPixel.X == 8) ||
-                             (position_.Tile.X == 15 && position_.DeltaPixel.X == 8))) {
-                        if (position_.Tile.Y == 14) {
-                            initialJumps_--;
-                            if (initialJumps_ == 0) {
-                                if (position_.Tile.X == 11) {
-                                    direction_ = Direction.Right;
-                                } else {
-                                    direction_ = Direction.Left;
-                                }
-                            } else {
-                                direction_ = Direction.Up;
-                            }
-                        } else if (position_.Tile.Y == 13) {
-                            direction_ = Direction.Down;
-                        }
-                    }
+                             ((position_.Tile.X == 11 && position_.DeltaPixel.X == 8) ||
+                              (position_.Tile.X == 15 && position_.DeltaPixel.X == 8))) {
+                                  if (position_.Tile.Y == 14) {
+                                      initialJumps_--;
+                                      if (initialJumps_ == 0) {
+                                          direction_ = position_.Tile.X == 11 ? Direction.Right : Direction.Left;
+                                      } else {
+                                          direction_ = Direction.Up;
+                                      }
+                                  } else if (position_.Tile.Y == 13) {
+                                      direction_ = Direction.Down;
+                                  }
+                              }
                     break;
                 case GhostState.Scatter:
                     // Attempt to reverse direction upon entering this state
@@ -307,7 +294,7 @@ namespace XNAPacMan {
         void AIScatter() {
             // As with AIAttack(), all the method does is change direction if necessary,
             // which only happens when exactly at a junction
-            if (position_.DeltaPixel != Point.Zero || !IsAJunction(position_.Tile)) {
+            if (position_.DeltaPixel != Point.Zero || !IsAJunction()) {
                 return;
             }
 
@@ -342,7 +329,7 @@ namespace XNAPacMan {
             // All this method does is change direction if necessary.
             // There is only one case in which we may potentially change direction :
             // when the ghost is exactly at a junction.
-            if (position_.DeltaPixel != Point.Zero || !IsAJunction(position_.Tile)) {
+            if (position_.DeltaPixel != Point.Zero || !IsAJunction()) {
                 return;
             }
 
@@ -386,12 +373,9 @@ namespace XNAPacMan {
                     direction_ = Direction.Left;
                 }
                     // Otherwise, when at a junction, head for the square above home closest to us.
-                else if (IsAJunction(position_.Tile)) {
-                    if (position_.Tile.X > 13) {
-                        direction_ = FindDirection(new Point(14, 11));
-                    } else {
-                        direction_ = FindDirection(new Point(13, 11));
-                    }
+                else if (IsAJunction())
+                {
+                    direction_ = FindDirection(position_.Tile.X > 13 ? new Point(14, 11) : new Point(13, 11));
                 }
             }
         }
@@ -419,9 +403,9 @@ namespace XNAPacMan {
         void AttackAIInky() {
             Tile nextTile = NextTile(player_.Direction, player_.Position);
             Tile nextNextTile = NextTile(player_.Direction, new Position(nextTile.ToPoint, Point.Zero));
-            Vector2 line = new Vector2(blinky_.Position.Tile.X - nextNextTile.ToPoint.X, blinky_.Position.Tile.Y - nextNextTile.ToPoint.Y);
+            var line = new Vector2(blinky_.Position.Tile.X - nextNextTile.ToPoint.X, blinky_.Position.Tile.Y - nextNextTile.ToPoint.Y);
             line *= 2;
-            Point destination = new Point(position_.Tile.X + (int)line.X, position_.Tile.Y + (int)line.Y);
+            var destination = new Point(position_.Tile.X + (int)line.X, position_.Tile.Y + (int)line.Y);
             // Prevent out-of-bounds exception
             destination.X = (int)MathHelper.Clamp(destination.X, 0, Grid.Width - 1);
             destination.Y = (int)MathHelper.Clamp(destination.Y, 0, Grid.Height - 1);
@@ -447,14 +431,15 @@ namespace XNAPacMan {
         // On certain tiles, we force all the ghosts in a particular direction.
         // This is to prevent them from bunching up too much, and give attentive
         // players some sure-fire ways to escape.
-        bool AIOverride() {
+        bool AIOverride()
+        {
             if (position_.Tile.Y == 11 && (position_.Tile.X == 12 || position_.Tile.X == 15)) {
                 return (direction_ == Direction.Right || direction_ == Direction.Left);
-            } else if (position_.Tile.Y == 20 && (position_.Tile.X == 9 || position_.Tile.X == 18)) {
-                return (direction_ == Direction.Right || direction_ == Direction.Left);
-            } else {
-                return false;
             }
+            if (position_.Tile.Y == 20 && (position_.Tile.X == 9 || position_.Tile.X == 18)) {
+                return (direction_ == Direction.Right || direction_ == Direction.Left);
+            }
+            return false;
         }
 
 
@@ -491,37 +476,21 @@ namespace XNAPacMan {
             int xDistance = destination.X - position_.Tile.X;
             int yDistance = destination.Y - position_.Tile.Y;
 
-            var directions = new List<Direction>(4);
+            List<Direction> directions;
 
             // Order directions by shortest path. Note: there is probably a better way to do this, probably if I hadn't used an
             // enum for directions in the first place. 
             if (Math.Abs(xDistance) > Math.Abs(yDistance)) {
                 if (xDistance > 0) {
-                    if (yDistance < 0) { // Direction is Up-Right, favor Right
-                        directions = new List<Direction> { Direction.Right, Direction.Up, Direction.Down, Direction.Left };
-                    } else { // Direction is Down-Right, favor Right
-                        directions = new List<Direction> { Direction.Right, Direction.Down, Direction.Up, Direction.Left };
-                    }
+                    directions = yDistance < 0 ? new List<Direction> { Direction.Right, Direction.Up, Direction.Down, Direction.Left } : new List<Direction> { Direction.Right, Direction.Down, Direction.Up, Direction.Left };
                 } else {
-                    if (yDistance < 0) { // Direction is Up-Left, favor Left
-                        directions = new List<Direction> { Direction.Left, Direction.Up, Direction.Down, Direction.Right };
-                    } else { // Direction is Down-Left, favor Left
-                        directions = new List<Direction> { Direction.Left, Direction.Down, Direction.Up, Direction.Right };
-                    }
+                    directions = yDistance < 0 ? new List<Direction> { Direction.Left, Direction.Up, Direction.Down, Direction.Right } : new List<Direction> { Direction.Left, Direction.Down, Direction.Up, Direction.Right };
                 }
             } else {
                 if (xDistance > 0) {
-                    if (yDistance < 0) { // Direction is Up-Right, favor Up
-                        directions = new List<Direction> { Direction.Up, Direction.Right, Direction.Left, Direction.Down };
-                    } else { // Direction is Down-Right, favor Down
-                        directions = new List<Direction> { Direction.Down, Direction.Right, Direction.Left, Direction.Up };
-                    }
+                    directions = yDistance < 0 ? new List<Direction> { Direction.Up, Direction.Right, Direction.Left, Direction.Down } : new List<Direction> { Direction.Down, Direction.Right, Direction.Left, Direction.Up };
                 } else {
-                    if (yDistance < 0) { // Direction is Up-Left, favor Up
-                        directions = new List<Direction> { Direction.Up, Direction.Left, Direction.Right, Direction.Down };
-                    } else { // Direction is Down-Left, favor Down
-                        directions = new List<Direction> { Direction.Down, Direction.Left, Direction.Right, Direction.Up };
-                    }
+                    directions = yDistance < 0 ? new List<Direction> { Direction.Up, Direction.Left, Direction.Right, Direction.Down } : new List<Direction> { Direction.Down, Direction.Left, Direction.Right, Direction.Up };
                 }
             }
 
@@ -531,10 +500,9 @@ namespace XNAPacMan {
             int index = directions.FindIndex(i => i != OppositeDirection(direction_) && NextTile(i).IsOpen);
             if (index != -1) {
                 return directions[index];
-            } else {
-                // Put a breakpoint here, this should never happen.
-                return directions.Find(i => NextTile(i).IsOpen);
             }
+            // Put a breakpoint here, this should never happen.
+            return directions.Find(i => NextTile(i).IsOpen);
         }
 
 
@@ -558,29 +526,25 @@ namespace XNAPacMan {
                 case Direction.Up:
                     if (p.Tile.Y - 1 < 0) {
                         return Grid.TileGrid[p.Tile.X, p.Tile.Y];
-                    } else {
-                        return Grid.TileGrid[p.Tile.X, p.Tile.Y - 1];
                     }
+                    return Grid.TileGrid[p.Tile.X, p.Tile.Y - 1];
                 case Direction.Down:
                     if (p.Tile.Y + 1 >= Grid.Height) {
                         return Grid.TileGrid[p.Tile.X, p.Tile.Y];
-                    } else {
-                        return Grid.TileGrid[p.Tile.X, p.Tile.Y + 1];
                     }
+                    return Grid.TileGrid[p.Tile.X, p.Tile.Y + 1];
                 case Direction.Left:
                     // Special case : the tunnel
                     if (p.Tile.X == 0) {
                         return Grid.TileGrid[Grid.Width - 1, p.Tile.Y];
-                    } else {
-                        return Grid.TileGrid[p.Tile.X - 1, p.Tile.Y];
                     }
+                    return Grid.TileGrid[p.Tile.X - 1, p.Tile.Y];
                 case Direction.Right:
                     // Special case : the tunnel
                     if (p.Tile.X + 1 >= Grid.Width) {
                         return Grid.TileGrid[0, p.Tile.Y];
-                    } else {
-                        return Grid.TileGrid[p.Tile.X + 1, p.Tile.Y];
                     }
+                    return Grid.TileGrid[p.Tile.X + 1, p.Tile.Y];
                 default:
                     throw new ArgumentException();
             }
@@ -589,30 +553,29 @@ namespace XNAPacMan {
         /// <summary>
         /// Returns whether the specified tile is a junction.
         /// </summary>
-        /// <param name="tile">Tile to check</param>
         /// <returns>whether the specified tile is a junction</returns>
-        bool IsAJunction(Point tile) {
-            if (NextTile(direction_).Type == TileTypes.Open) {
+        bool IsAJunction()
+        {
+            if (NextTile(direction_).Type == TileTypes.Open)
+            {
                 // If the path ahead is open, we're at a junction if it's also open
                 // to one of our sides
                 if (direction_ == Direction.Up || direction_ == Direction.Down) {
                     return ((NextTile(Direction.Left).IsOpen) ||
                             (NextTile(Direction.Right).IsOpen));
-                } else {
-                    return ((NextTile(Direction.Up).IsOpen) ||
-                            (NextTile(Direction.Down).IsOpen));
                 }
+                return ((NextTile(Direction.Up).IsOpen) ||
+                        (NextTile(Direction.Down).IsOpen));
             }
                 // If the path ahead is blocked, then we're definitely at a junction, because there are no dead-ends
-            else {
-                return true;
-            }
+            return true;
         }
 
         /// <summary>
         /// Assumes spritebatch.begin() was called
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        /// <param name="boardPosition"></param>
         public void Draw(GameTime gameTime, Vector2 boardPosition) {
             // Ghosts have a two-frame animation; we use a bool to toggle between
             // the two. We divide DateTime.Now.Milliseconds by the period.
@@ -625,7 +588,7 @@ namespace XNAPacMan {
             Vector2 eyesBasePosition;
             eyesBasePosition.X = position.X + 4;
             eyesBasePosition.Y = position.Y + 6;
-            Vector2 eyesCenterPosition = new Vector2();
+            var eyesCenterPosition = new Vector2();
             switch (direction_) {
                 case Direction.Up:
                     eyesBasePosition.Y -= 2;
@@ -686,7 +649,7 @@ namespace XNAPacMan {
             // We detect if part of the sprite is rendered outside of the board.
             // First, to the left.
             if (position.X < boardPosition.X) {
-                int deltaPixel = (int)(boardPosition.X - position.X); // Number of pixels off the board
+                var deltaPixel = (int)(boardPosition.X - position.X); // Number of pixels off the board
                 var leftPortion = new Rectangle(rect.X + deltaPixel, rect.Y, textureWidth - deltaPixel, textureHeight);
                 var leftPortionPosition = new Vector2(boardPosition.X, position.Y);
                 var rightPortion = new Rectangle(rect.X, rect.Y, deltaPixel, textureHeight);
@@ -696,7 +659,7 @@ namespace XNAPacMan {
             }
                 // Next, to the right
             else if (position.X > (boardPosition.X + (16 * 28) - textureWidth)) {
-                int deltaPixel = (int)((position.X + textureWidth) - (boardPosition.X + (16 * 28))); // Number of pixels off the board
+                var deltaPixel = (int)((position.X + textureWidth) - (boardPosition.X + (16 * 28))); // Number of pixels off the board
                 var leftPortion = new Rectangle(rect.X + textureWidth - deltaPixel, rect.Y, deltaPixel, textureHeight);
                 var leftPortionPosition = new Vector2(boardPosition.X, position.Y);
                 var rightPortion = new Rectangle(rect.X, rect.Y, textureWidth - deltaPixel, textureHeight);
@@ -713,23 +676,23 @@ namespace XNAPacMan {
 
 
         // DRAWING
-        SpriteBatch spriteBatch_;
-        Texture2D ghostBase1_;
-        Texture2D ghostBase2_;
-        Texture2D ghostChased_;
-        Texture2D eyesBase_;
-        Texture2D eyesCenter_;
-        Color colorBase_;
+        readonly SpriteBatch spriteBatch_;
+        readonly Texture2D ghostBase1_;
+        readonly Texture2D ghostBase2_;
+        readonly Texture2D ghostChased_;
+        readonly Texture2D eyesBase_;
+        readonly Texture2D eyesCenter_;
+        readonly Color colorBase_;
         bool wiggle_;
 
         // LOGIC
         Ghost blinky_; // Only Inky needs this for his AI
-        Ghosts identity_;
+        readonly Ghosts identity_;
         Direction direction_;
         Position position_;
         GhostState state_;
         GhostState previousState_;
-        List<Point> scatterTiles_;
+        readonly List<Point> scatterTiles_;
         Point lastJunction_;
         DateTime timeInCurrentState;
         Player player_;
@@ -737,7 +700,7 @@ namespace XNAPacMan {
         bool scheduleStateEval_;
         int scatterModesLeft_;
         int initialJumps_;
-        int previousNumCrumps_;
+        readonly int previousNumCrumps_;
         int updateCount_;
 
         public GhostState State { get { return state_; } set { state_ = value; timeInCurrentState = DateTime.Now; } }

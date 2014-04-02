@@ -1,25 +1,17 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
-using Microsoft.Xna.Framework.Net;
-using Microsoft.Xna.Framework.Storage;
 
-namespace XNAPacMan {
+namespace PACMAN {
     /// <summary>
     /// This is the main type for your game
     /// </summary>
-    public class XNAPacMan : Microsoft.Xna.Framework.Game {
-        GraphicsDeviceManager graphics_;
+    public class XNAPacMan : Game {
+        readonly GraphicsDeviceManager graphics_;
         SpriteBatch spriteBatch_;
         AudioEngine audioEngine_;
-        WaveBank waveBank_;
+        WaveBank _waveBank;
         SoundBank soundBank_;
 
         public int ScreenWidth { get; set; }
@@ -30,9 +22,11 @@ namespace XNAPacMan {
 
         public XNAPacMan() {
             // Pac Man 2 is somewhat resolution-independent, but runs best at 720x640.
-            graphics_ = new GraphicsDeviceManager(this);
-            graphics_.PreferredBackBufferHeight = 720;
-            graphics_.PreferredBackBufferWidth = 640;
+            graphics_ = new GraphicsDeviceManager(this)
+            {
+                PreferredBackBufferHeight = 720,
+                PreferredBackBufferWidth = 640
+            };
             ScreenWidth = Window.ClientBounds.Width;
             ScreenHeight = Window.ClientBounds.Height;
 
@@ -57,7 +51,7 @@ namespace XNAPacMan {
             // This will be called before the Initialize() method of any component, which
             // all rely on these Services being available.
             audioEngine_ = new AudioEngine("Content/Audio/YEPAudio.xgs");
-            waveBank_ = new WaveBank(audioEngine_, "Content/Audio/Wave Bank.xwb");
+            _waveBank = new WaveBank(audioEngine_, "Content/Audio/Wave Bank.xwb");
             soundBank_ = new SoundBank(audioEngine_, "Content/Audio/Sound Bank.xsb");
             Services.AddService(typeof(AudioEngine), audioEngine_);
             Services.AddService(typeof(SoundBank), soundBank_);

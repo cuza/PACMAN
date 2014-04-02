@@ -1,12 +1,10 @@
-using System;
-
-namespace XNAPacMan {
+namespace PACMAN {
     static class Program {
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-        static void Main(string[] args) {
-            using (XNAPacMan game = new XNAPacMan()) {
+        static void Main() {
+            using (var game = new XNAPacMan()) {
                 game.Run();
             }
         }

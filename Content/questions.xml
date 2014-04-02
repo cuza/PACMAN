@@ -1,38 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Root>
   <Ejercicio Tipo="VoF">
-        <Pregunta>
-      	Loren ipsum dolor bla bla bla
-      	</Pregunta>
-        <Respuesta Correcto="true">
-        	bla bla bla
-        </Respuesta>
-        <Respuesta Correcto="true">
-        	bla bla bla
-        </Respuesta>
-        <Respuesta Correcto="false">
-        	bla bla bla
-        </Respuesta>    
-        <Respuesta Correcto="false">
-        	bla bla bla
-        </Respuesta> 
+        <Pregunta>Hello Moto</Pregunta>
+        <Respuesta Correcto="si">Correcto</Respuesta>
+        <Respuesta Correcto="si">Correcto</Respuesta>
+        <Respuesta Correcto="no">Incorrecto</Respuesta>    
+        <Respuesta Correcto="no">Incorrecto</Respuesta> 
   </Ejercicio>
   <Ejercicio Tipo="Marca">
-        <Pregunta>
-      	Loren ipsum dolor bla bla bla
-      	</Pregunta>
-        <Respuesta Correcto="false">
-        	bla bla bla
-        </Respuesta>
-        <Respuesta Correcto="true">
-        	bla bla bla
-        </Respuesta>
-        <Respuesta Correcto="false">
-        	bla bla bla
-        </Respuesta>    
-        <Respuesta Correcto="false">
-        	bla bla bla
-        </Respuesta> 
+        <Pregunta>Loren ipsum dolor bla bla bla</Pregunta>
+        <Respuesta Correcto="no">Incorrecto</Respuesta>
+        <Respuesta Correcto="si">Correcto</Respuesta>
+        <Respuesta Correcto="no">Incorrecto</Respuesta>    
+        <Respuesta Correcto="no">Incorrecto</Respuesta> 
   </Ejercicio>
 </Root>
 

@@ -4,15 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 
 
-namespace XNAPacMan {
+namespace PACMAN {
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
-    public class HighScores : Microsoft.Xna.Framework.DrawableGameComponent {
+    public class HighScores : DrawableGameComponent {
         public HighScores(Game game)
             : base(game) {
             // TODO: Construct any child components here
@@ -26,7 +25,7 @@ namespace XNAPacMan {
             scores_ = new List<string>(10);
             const string fileName = "highscores.txt";
             if (File.Exists(fileName)) {
-                scores_ = File.ReadAllLines(fileName).ToList<string>();
+                scores_ = File.ReadAllLines(fileName).ToList();
                 scores_.Sort((a, b) => Convert.ToInt32(a).CompareTo(Convert.ToInt32(b)));
                 scores_.Reverse();
             }
@@ -59,10 +58,10 @@ namespace XNAPacMan {
         /// <param name="gameTime">Provides a snapshot of timing values</param>
         public override void Draw(GameTime gameTime) {
             base.Draw(gameTime);
-            Vector2 position = new Vector2(graphics_.PreferredBackBufferWidth / 2 - 150, graphics_.PreferredBackBufferHeight / 2 - 200);
+            var position = new Vector2(graphics_.PreferredBackBufferWidth / 2 - 150, graphics_.PreferredBackBufferHeight / 2 - 200);
             spriteBatch_.Begin();
             for (int i = 0; i < 10; i++) {
-                spriteBatch_.DrawString(scoreFont_, (i + 1).ToString() + ".", new Vector2(position.X, position.Y + (30 * i)), Color.White);
+                spriteBatch_.DrawString(scoreFont_, (i + 1) + ".", new Vector2(position.X, position.Y + (30 * i)), Color.White);
                 if (i < scores_.Count) {
                     spriteBatch_.DrawString(scoreFont_, scores_[i], new Vector2(position.X + 50, position.Y + (30 * i)), Color.White);
                 }

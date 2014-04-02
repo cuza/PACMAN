@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 
-namespace XNAPacMan {
+namespace PACMAN {
     /// <summary>
     /// Defines the position of an entity (player, ghost) on the board. 
     /// </summary>
@@ -35,10 +35,10 @@ namespace XNAPacMan {
 
         public Player(Game game) {
             Reset();
-            this.game = game;
+            _game = game;
             updatesPerPixel_ = Constants.PacManSpeed();
             spriteBatch_ = (SpriteBatch)game.Services.GetService(typeof(SpriteBatch));
-            eatingFrames_ = new Texture2D[] {
+            eatingFrames_ = new[] {
                 game.Content.Load<Texture2D>("sprites/PacManEating1"),
                 game.Content.Load<Texture2D>("sprites/PacManEating2"),
                 game.Content.Load<Texture2D>("sprites/PacManEating3"),
@@ -47,7 +47,7 @@ namespace XNAPacMan {
                 game.Content.Load<Texture2D>("sprites/PacManEating6"),
                 game.Content.Load<Texture2D>("sprites/PacManEating7"),
                 game.Content.Load<Texture2D>("sprites/PacManEating8"),
-                game.Content.Load<Texture2D>("sprites/PacManEating9"),
+                game.Content.Load<Texture2D>("sprites/PacManEating9")
             };
             dyingFrames_ = game.Content.Load<Texture2D>("sprites/DyingSheetNew");
         }
@@ -207,7 +207,7 @@ namespace XNAPacMan {
             }
 
             else if (state_ == State.Dying) {
-                int timeBetweenFrames = 90; // Sound "Death" is 1811 milliseconds long, we have 20 frames to go through.
+                const int timeBetweenFrames = 90; // Sound "Death" is 1811 milliseconds long, we have 20 frames to go through.
                 timer_ += gameTime.ElapsedGameTime;
                 int index = (timer_.Seconds * 1000 + timer_.Milliseconds) / timeBetweenFrames;
                 if (index > 19) {
@@ -235,7 +235,7 @@ namespace XNAPacMan {
             // We detect if part of the pacman is rendered outside of the board.
             // First, to the left.
             if (position.X < boardPosition.X) {
-                int deltaPixel = (int)(boardPosition.X - position.X); // Number of pixels off the board
+                var deltaPixel = (int)(boardPosition.X - position.X); // Number of pixels off the board
                 var leftPortion = new Rectangle(rect.X + deltaPixel, rect.Y, 26 - deltaPixel, 26);
                 var leftPortionPosition = new Vector2(boardPosition.X, position.Y);
                 var rightPortion = new Rectangle(rect.X, rect.Y, deltaPixel, 26);
@@ -245,7 +245,7 @@ namespace XNAPacMan {
             }
             // Next, to the right
             else if (position.X > (boardPosition.X + (16 * 28) - 26)) {
-                int deltaPixel = (int)((position.X + 26) - (boardPosition.X + (16 * 28))); // Number of pixels off the board
+                var deltaPixel = (int)((position.X + 26) - (boardPosition.X + (16 * 28))); // Number of pixels off the board
                 var leftPortion = new Rectangle(rect.X + 26 - deltaPixel, rect.Y, deltaPixel, 26);
                 var leftPortionPosition = new Vector2(boardPosition.X, position.Y);
                 var rightPortion = new Rectangle(rect.X, rect.Y, 26 - deltaPixel, 26);
@@ -265,7 +265,7 @@ namespace XNAPacMan {
         void Reset() {
             state_ = State.Start;
             direction_ = Direction.Right;
-            usedFramesIndex_ = new int[] { 0, 1, 2 };
+            usedFramesIndex_ = new[] { 0, 1, 2 };
             position_ = new Position { Tile = new Point(13, 23), DeltaPixel = new Point(8, 0) };
             updateCount_ = 0;
         }
@@ -317,7 +317,7 @@ namespace XNAPacMan {
             switch (newDirection) {
                 case Keys.Up:
                     direction_ = Direction.Up;
-                    usedFramesIndex_ = new int[] { 0, 7, 8 };
+                    usedFramesIndex_ = new[] { 0, 7, 8 };
                     if (position_.DeltaPixel != Point.Zero) {
                         position_.Tile.Y += 1;
                         position_.DeltaPixel.Y -= 16;
@@ -325,7 +325,7 @@ namespace XNAPacMan {
                     break;
                 case Keys.Down:
                     direction_ = Direction.Down;
-                    usedFramesIndex_ = new int[] { 0, 3, 4 };
+                    usedFramesIndex_ = new[] { 0, 3, 4 };
                     if (position_.DeltaPixel != Point.Zero) {
                         position_.Tile.Y -= 1;
                         position_.DeltaPixel.Y += 16;
@@ -333,7 +333,7 @@ namespace XNAPacMan {
                     break;
                 case Keys.Left:
                     direction_ = Direction.Left;
-                    usedFramesIndex_ = new int[] { 0, 5, 6 };
+                    usedFramesIndex_ = new[] { 0, 5, 6 };
                     if (position_.DeltaPixel != Point.Zero) {
                         position_.Tile.X += 1;
                         position_.DeltaPixel.X -= 16;
@@ -341,7 +341,7 @@ namespace XNAPacMan {
                     break;
                 case Keys.Right:
                     direction_ = Direction.Right;
-                    usedFramesIndex_ = new int[] { 0, 1, 2 };
+                    usedFramesIndex_ = new[] { 0, 1, 2 };
                     if (position_.DeltaPixel != Point.Zero) {
                         position_.Tile.X -= 1;
                         position_.DeltaPixel.X += 16;
@@ -350,11 +350,11 @@ namespace XNAPacMan {
             }
         }
 
-        Game game;
+        Game _game;
         TimeSpan timer_;
-        SpriteBatch spriteBatch_;
-        Texture2D dyingFrames_;
-        Texture2D[] eatingFrames_;
+        readonly SpriteBatch spriteBatch_;
+        readonly Texture2D dyingFrames_;
+        readonly Texture2D[] eatingFrames_;
         int[] usedFramesIndex_;
         int updatesPerPixel_;
         int updateCount_;

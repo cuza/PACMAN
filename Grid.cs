@@ -1,9 +1,7 @@
-using System;
 using System.IO;
-using System.Text;
 using Microsoft.Xna.Framework;
 
-namespace XNAPacMan {
+namespace PACMAN {
 
 
     /// <summary>
@@ -99,7 +97,7 @@ namespace XNAPacMan {
 
         
 
-        static Tile[,] tileGrid_ = new Tile[28, 31];
+        static readonly Tile[,] tileGrid_ = new Tile[28, 31];
 
         public static Tile[,] TileGrid {
             get { return tileGrid_; }
@@ -160,7 +158,7 @@ namespace XNAPacMan {
             get { return type_ == TileTypes.Open; }
         }
 
-        Point position_;
+        readonly Point position_;
         public Point ToPoint { get { return position_; } }
 
         /// <summary>

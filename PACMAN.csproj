@@ -181,15 +181,6 @@
     <Content Include="Game.ico" />
     <Content Include="GameThumbnail.png" />
     <Content Include="Grid.txt" />
-    <Content Include="_ReSharper.XNAPacMan\ModuleIds.xml" />
-    <Content Include="_UpgradeReport_Files\UpgradeReport.css" />
-    <Content Include="_UpgradeReport_Files\UpgradeReport.xslt" />
-    <Content Include="_UpgradeReport_Files\UpgradeReport_Error.png" />
-    <Content Include="_UpgradeReport_Files\UpgradeReport_Information.png" />
-    <Content Include="_UpgradeReport_Files\UpgradeReport_Minus.gif" />
-    <Content Include="_UpgradeReport_Files\UpgradeReport_Plus.gif" />
-    <Content Include="_UpgradeReport_Files\UpgradeReport_Success.png" />
-    <Content Include="_UpgradeReport_Files\UpgradeReport_Warning.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Content\MenuItem.spritefont" />
@@ -200,33 +191,11 @@
     <None Include="Content\Source codeContent.contentproj" />
     <None Include="Map.dgml" />
     <None Include="XNAPacMan.csproj.Debug.cachefile" />
-    <None Include="_ReSharper.XNAPacMan\BuildScriptCache\.crc" />
-    <None Include="_ReSharper.XNAPacMan\BuildScriptCache\.version" />
-    <None Include="_ReSharper.XNAPacMan\BuildScriptCache\5\427354ed.dat" />
-    <None Include="_ReSharper.XNAPacMan\NamedArguments\.crc" />
-    <None Include="_ReSharper.XNAPacMan\NamedArguments\.version" />
-    <None Include="_ReSharper.XNAPacMan\NamedArguments\5\44ac88c6.dat" />
-    <None Include="_ReSharper.XNAPacMan\ProjectModel\ProjectModel.dat" />
-    <None Include="_ReSharper.XNAPacMan\Resources\.crc" />
-    <None Include="_ReSharper.XNAPacMan\Resources\.version" />
-    <None Include="_ReSharper.XNAPacMan\SymbolCache.bin" />
-    <None Include="_ReSharper.XNAPacMan\TagPrefixes\.crc" />
-    <None Include="_ReSharper.XNAPacMan\TagPrefixes\.version" />
-    <None Include="_ReSharper.XNAPacMan\TodoCache\.crc" />
-    <None Include="_ReSharper.XNAPacMan\TodoCache\.version" />
-    <None Include="_ReSharper.XNAPacMan\TodoCache\0\65c8ded7.dat" />
-    <None Include="_ReSharper.XNAPacMan\WebsiteFileReferences\.crc" />
-    <None Include="_ReSharper.XNAPacMan\WebsiteFileReferences\.version" />
-    <None Include="_ReSharper.XNAPacMan\WordIndex\.crc" />
-    <None Include="_ReSharper.XNAPacMan\WordIndex\.version" />
-    <None Include="_ReSharper.XNAPacMan\WordIndex\7\50f5836c.dat" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\bin\x86\Debug\" />
     <Folder Include="Content\bin\x86\Release\" />
     <Folder Include="Content\obj\x86\Debug\TempPE\" />
-    <Folder Include="_ReSharper.XNAPacMan\DecompilerCache\" />
-    <Folder Include="_ReSharper.XNAPacMan\PdbInfo\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
